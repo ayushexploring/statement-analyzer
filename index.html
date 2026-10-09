@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Card Spend Analyzer</title>
+  <meta name="description" content="Analyze an SBI savings account statement PDF to see how much was paid to each credit card. Runs entirely in your browser.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='2' y='7' width='28' height='18' rx='3' fill='%232563eb'/><rect x='2' y='11' width='28' height='4' fill='%231e3a8a'/></svg>">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="wrap top">
+    <div>
+      <h1>Card Spend Analyzer</h1>
+      <p class="muted">Upload your SBI savings account statement (PDF). See what you paid to each credit card and your total spend for the month.</p>
+    </div>
+    <p class="privacy">🔒 Runs entirely in your browser. Nothing is uploaded or stored.</p>
+  </header>
+
+  <main class="wrap">
+    <section id="upload" class="panel">
+      <label id="drop" class="drop" for="file">
+        <input id="file" type="file" accept="application/pdf,.pdf" hidden>
+        <strong>Choose statement PDF</strong>
+        <span class="muted">or drag and drop it here</span>
+      </label>
+      <form id="pwForm" class="pw" hidden>
+        <label for="pw">This PDF is password protected. Enter the password:</label>
+        <div class="row">
+          <input id="pw" type="password" autocomplete="off">
+          <button type="submit" class="btn primary">Open</button>
+        </div>
+        <p class="hint muted">For SBI e-statements this is usually the last 5 digits of your registered mobile number followed by your date of birth (DDMMYY).</p>
+      </form>
+      <p id="status" class="status" role="status"></p>
+    </section>
+
+    <section id="results" hidden>
+      <div class="toolbar">
+        <div id="fileInfo" class="muted"></div>
+        <div class="row">
+          <label for="month" class="muted">Month</label>
+          <select id="month"></select>
+          <button id="exportCsv" class="btn">Export CSV</button>
+        </div>
+      </div>
+
+      <div id="kpis" class="kpis"></div>
+
+      <div class="grid">
+        <div class="panel">
+          <h2>Credit card payments</h2>
+          <table class="summary" id="cardTable"></table>
+        </div>
+        <div class="panel">
+          <h2>Monthly expense</h2>
+          <table class="summary" id="totalTable"></table>
+          <p class="note muted">Total expense = credit card payments + other debits. Rows marked “Exclude” (e.g. transfers to your own accounts, investments) are not counted.</p>
+        </div>
+      </div>
+
+      <details class="panel" id="cardsPanel">
+        <summary><h2>My cards &amp; matching rules</h2></summary>
+        <p class="muted">These rules decide which payment belongs to which card. Changes apply to this session only. Click <em>Download config.js</em> and replace <code>js/config.js</code> in your repo to keep them.</p>
+        <div id="cardEditor"></div>
+        <div class="row gap">
+          <button id="addCard" class="btn">+ Add card</button>
+          <button id="applyRules" class="btn primary">Apply rules</button>
+          <button id="downloadConfig" class="btn">Download config.js</button>
+        </div>
+      </details>
+
+      <div class="panel">
+        <div class="toolbar">
+          <h2>Transactions</h2>
+          <div class="row">
+            <select id="filter">
+              <option value="debits">All debits</option>
+              <option value="cards">Card payments</option>
+              <option value="unassigned">Unassigned card payments</option>
+              <option value="other">Other spends</option>
+              <option value="credits">Credits</option>
+              <option value="all">Everything</option>
+            </select>
+            <input id="search" type="search" placeholder="Search narration…">
+          </div>
+        </div>
+        <p class="muted small">Change the category on any debit to fix it. Payments made through CRED and similar apps don't say which card was paid, so assign those yourself.</p>
+        <div class="table-scroll">
+          <table class="txns" id="txnTable"></table>
+        </div>
+      </div>
+
+      <details class="panel">
+        <summary><h2>Debug: extracted text</h2></summary>
+        <p class="muted small">If transactions are missing, this shows the text read from the PDF.</p>
+        <pre id="rawText"></pre>
+      </details>
+    </section>
+  </main>
+
+  <footer class="wrap muted small">Statement data never leaves this page. Reload to clear it.</footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/parser.js"></script>
+  <script src="js/classifier.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
