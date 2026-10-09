@@ -47,8 +47,10 @@
     const viaApp = INTERMEDIARIES.test(t);
 
     let best = null;
+    const tied = new Set();
     const consider = (i, len, why) => {
-      if (!best || len > best.len) best = { i, len, why };
+      if (!best || len > best.len) { best = { i, len, why }; tied.clear(); tied.add(i); }
+      else if (len === best.len) tied.add(i);
     };
 
     cards.forEach((c, i) => {
@@ -63,6 +65,10 @@
       }
     });
 
+    // Several cards match equally well (e.g. three cards from the same bank): let the user pick.
+    if (best && tied.size > 1) {
+      return { category: 'cc-unassigned', reason: 'could be ' + [...tied].map(i => cards[i].name).join(' / ') + '. Add last 4 digits to tell them apart' };
+    }
     if (best) return { category: 'card:' + best.i, reason: best.why };
     if (looksCC) return { category: 'cc-unassigned', reason: viaApp ? 'paid via app, card not identifiable' : 'card payment, issuer not recognised' };
     return { category: 'other', reason: '' };

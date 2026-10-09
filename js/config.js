@@ -1,9 +1,9 @@
 /*
  * YOUR CREDIT CARDS
  * -----------------
- * Edit this list to match your 14 cards. This file only contains matching
- * rules, never any statement data. You can also edit cards inside the app
- * and use "Download config.js" to replace this file.
+ * This file only contains matching rules, never any statement data.
+ * You can also edit cards inside the app and use "Download config.js"
+ * to replace this file.
  *
  *  name   : label shown in the report
  *  bank   : issuer words. Used ONLY when the narration already looks like a
@@ -17,21 +17,23 @@
  *           narration (e.g. "XXXXXXXXXXXX1234", "4375********1234").
  *
  * Matching is case-insensitive and ignores punctuation.
- * When several cards could match, the longest matching word wins.
+ * The longest matching word wins. If several cards match equally well
+ * (e.g. two cards from the same bank), the payment is left unassigned so you
+ * can pick, so fill in last4 / match for cards that share a bank.
  */
 window.CARD_CONFIG = [
-  { name: 'HDFC Credit Card', bank: ['HDFC'], match: [], last4: '' },
-  { name: 'ICICI Credit Card', bank: ['ICICI'], match: [], last4: '' },
-  { name: 'SBI Card', bank: ['SBI CARD', 'SBICARD', 'SBI CARDS', 'SBICPSL'], match: ['SBI CARD', 'SBICARD', 'SBICPSL'], last4: '' },
-  { name: 'Axis Credit Card', bank: ['AXIS'], match: [], last4: '' },
-  { name: 'Kotak Credit Card', bank: ['KOTAK'], match: [], last4: '' },
-  { name: 'American Express', bank: ['AMEX', 'AMERICAN EXPRESS'], match: ['AMEX', 'AMERICAN EXPRESS'], last4: '' },
-  { name: 'IDFC First Credit Card', bank: ['IDFC'], match: [], last4: '' },
-  { name: 'Yes Bank Credit Card', bank: ['YES BANK', 'YESBANK'], match: [], last4: '' },
-  { name: 'RBL Credit Card', bank: ['RBL'], match: [], last4: '' },
-  { name: 'IndusInd Credit Card', bank: ['INDUSIND'], match: [], last4: '' },
-  { name: 'AU Credit Card', bank: ['AU SMALL', 'AU BANK', 'AUBL'], match: [], last4: '' },
-  { name: 'HSBC Credit Card', bank: ['HSBC'], match: [], last4: '' },
-  { name: 'Standard Chartered Credit Card', bank: ['STANDARD CHARTERED', 'SCB', 'STANCHART'], match: [], last4: '' },
-  { name: 'OneCard', bank: ['ONECARD', 'ONE CARD'], match: ['ONECARD', 'FPL TECHNOLOGIES'], last4: '' },
+  { name: 'SBI SimplySave RuPay', bank: ['SBI CARD', 'SBICARD', 'SBI CARDS', 'SBICPSL'], match: ['SBICPSL'], last4: '' },
+  { name: 'SBI Cashback Mastercard', bank: ['SBI CARD', 'SBICARD', 'SBI CARDS', 'SBICPSL'], match: ['SBICPSL'], last4: '' },
+  { name: 'SBI PhonePe Black RuPay', bank: ['SBI CARD', 'SBICARD', 'SBI CARDS', 'SBICPSL'], match: ['SBICPSL'], last4: '' },
+  { name: 'IndusInd Tiger Visa', bank: ['INDUSIND', 'INDUS IND'], match: [], last4: '' },
+  { name: 'ICICI Amazon Pay Visa', bank: ['ICICI'], match: [], last4: '' },
+  { name: 'ICICI Platinum Visa', bank: ['ICICI'], match: [], last4: '' },
+  { name: 'ICICI Coral RuPay', bank: ['ICICI'], match: [], last4: '' },
+  { name: 'HDFC Millennia Mastercard', bank: ['HDFC'], match: [], last4: '' },
+  { name: 'HDFC Swiggy Mastercard', bank: ['HDFC'], match: [], last4: '' },
+  { name: 'Axis IOCL RuPay', bank: ['AXIS'], match: [], last4: '' },
+  { name: 'IDFC First Select Mastercard', bank: ['IDFC'], match: [], last4: '' },
+  { name: 'Federal Scapia Visa', bank: ['FEDERAL', 'SCAPIA'], match: ['SCAPIA'], last4: '' },
+  { name: 'Federal Scapia RuPay', bank: ['FEDERAL', 'SCAPIA'], match: ['SCAPIA'], last4: '' },
+  { name: 'BOB Eterna RuPay', bank: ['BOB', 'BANK OF BARODA', 'BOBCARD', 'BOB CARD'], match: ['BOBCARD', 'BOB FINANCIAL'], last4: '' },
 ];
